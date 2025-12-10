@@ -44,3 +44,16 @@ func UrlToQR() {
 	beeep.Notify("QR Generated", "QR Code successfully generated and copied into clipboard", filepath)
 	fmt.Println("qr in clipboard")
 }
+
+func QRToUrl() {
+	screenshot, err := utils.CaptureScreenshot()
+	if err != nil {
+		log.Println(err)
+	}
+	url, err := utils.ScanQRFromImage(screenshot)
+	if err != nil {
+		log.Println(err)
+	}
+	fmt.Println(url)
+
+}

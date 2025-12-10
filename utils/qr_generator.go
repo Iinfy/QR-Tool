@@ -16,7 +16,7 @@ func GenerateQR(url, filename string) {
 
 	w, err := standard.New(filename)
 	if err != nil {
-		fmt.Printf("standard.New failed: %v", err)
+		fmt.Printf("writer initialization failed: %v", err)
 		return
 	}
 

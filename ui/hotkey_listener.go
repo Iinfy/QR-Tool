@@ -10,11 +10,11 @@ import (
 func StartKeyboardHook() {
 	add()
 
-	low()
 }
 
 func EndKeyboardHook() {
 	hook.End()
+	fmt.Println("--- Keyboard hook ended ---")
 }
 
 func add() {
@@ -26,17 +26,9 @@ func add() {
 
 	hook.Register(hook.KeyDown, []string{"ctrl", "alt", "e"}, func(e hook.Event) {
 		fmt.Println("ctrl-alt-q", "qr scanning")
+		app.QRToUrl()
 	})
 
 	s := hook.Start()
 	<-hook.Process(s)
-}
-
-func low() {
-	evChan := hook.Start()
-	defer hook.End()
-
-	for ev := range evChan {
-		fmt.Println("hook: ", ev)
-	}
 }

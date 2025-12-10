@@ -22,36 +22,39 @@ func LaunchTrayMenu() {
 
 func onReady() {
 	systray.SetIcon(getIcon())
-	systray.SetTitle("QRT")
+	systray.SetTitle("QR Tool")
 	systray.SetTooltip("QR Tool")
 
-	mOpen := systray.AddMenuItem("Open Dashboard", "Open the application UI")
+	generationMenu := systray.AddMenuItem("QR Generation", "QR generation settings")
+	generationEnabled := generationMenu.AddSubMenuItemCheckbox("Enabled", "Enabled", true)
+
+	scanningMenu := systray.AddMenuItem("QR Scanner", "QR scanner setiings")
+	scanEnabled := scanningMenu.AddSubMenuItemCheckbox("Enabled", "Enabled", true)
 
 	systray.AddSeparator()
-
-	mToggle := systray.AddMenuItemCheckbox("Service Running", "Toggle the main service", true)
 
 	mQuit := systray.AddMenuItem("Quit", "Exit the application")
 
 	go func() {
 		for {
 			select {
-			case <-mOpen.ClickedCh:
-				fmt.Println("Opening application dashboard...")
-
-			case <-mToggle.ClickedCh:
-				if mToggle.Checked() {
-					mToggle.Uncheck()
-					fmt.Println("Service Stopped")
-				} else {
-					mToggle.Check()
-					fmt.Println("Service Started")
-				}
-
 			case <-mQuit.ClickedCh:
-				fmt.Println("Quit signal received, exiting...")
 				systray.Quit()
 				return
+
+			case <-generationEnabled.ClickedCh:
+				if generationEnabled.Checked() {
+					generationEnabled.Uncheck()
+				} else {
+					generationEnabled.Check()
+				}
+
+			case <-scanEnabled.ClickedCh:
+				if scanEnabled.Checked() {
+					scanEnabled.Uncheck()
+				} else {
+					scanEnabled.Check()
+				}
 			}
 		}
 	}()

@@ -13,6 +13,8 @@ func main() {
 		panic(err)
 	}
 	beeep.AppName = "QR Generator"
-	ui.StartKeyboardHook()
+	go ui.StartKeyboardHook()
+	defer ui.EndKeyboardHook()
+	ui.LaunchTrayMenu()
 
 }
