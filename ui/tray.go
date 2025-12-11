@@ -3,6 +3,7 @@ package ui
 import (
 	"fmt"
 	"os"
+	"qrgen/utils"
 	"time"
 
 	"github.com/getlantern/systray"
@@ -31,6 +32,11 @@ func onReady() {
 	scanningMenu := systray.AddMenuItem("QR Scanner", "QR scanner setiings")
 	scanEnabled := scanningMenu.AddSubMenuItemCheckbox("Enabled", "Enabled", true)
 
+	mainMonitor := systray.AddMenuItem("Main monitor", "Select main monitor")
+	monitor1 := mainMonitor.AddSubMenuItemCheckbox("Monitor 1", "Set 1 monitor as main", true)
+	monitor2 := mainMonitor.AddSubMenuItemCheckbox("Monitor 2", "Set 2 monitor as main", false)
+	monitor3 := mainMonitor.AddSubMenuItemCheckbox("Monitor 3", "Set 3 monitor as main", false)
+
 	systray.AddSeparator()
 
 	mQuit := systray.AddMenuItem("Quit", "Exit the application")
@@ -55,7 +61,26 @@ func onReady() {
 				} else {
 					scanEnabled.Check()
 				}
+
+			case <-monitor1.ClickedCh:
+				monitor1.Check()
+				monitor2.Uncheck()
+				monitor3.Uncheck()
+				utils.SetActiveDisplay(1)
+
+			case <-monitor2.ClickedCh:
+				monitor1.Uncheck()
+				monitor2.Check()
+				monitor3.Uncheck()
+				utils.SetActiveDisplay(2)
+
+			case <-monitor3.ClickedCh:
+				monitor1.Uncheck()
+				monitor2.Uncheck()
+				monitor3.Check()
+				utils.SetActiveDisplay(3)
 			}
+
 		}
 	}()
 

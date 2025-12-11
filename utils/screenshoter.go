@@ -24,7 +24,7 @@ func SetActiveDisplay(newActiveDisplay int) error {
 	if n < newActiveDisplay {
 		return errors.New("incorrect display")
 	}
-	activeDisplay = newActiveDisplay
+	activeDisplay = newActiveDisplay - 1
 	return nil
 }
 
