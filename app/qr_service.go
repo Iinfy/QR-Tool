@@ -53,7 +53,12 @@ func QRToUrl() {
 	url, err := utils.ScanQRFromImage(screenshot)
 	if err != nil {
 		log.Println(err)
+		beeep.Notify("Scan error", "No QR found", "qrlogo.ico")
+		return
 	}
+	clipboard.Write(clipboard.FmtText, []byte(url))
 	fmt.Println(url)
+	err = beeep.Notify("QR scanned", "QR successfully scanned, url copied to clipboard", "qrlogo.ico")
+	fmt.Println(err)
 
 }
