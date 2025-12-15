@@ -1,6 +1,7 @@
 package main
 
 import (
+	"qrgen/config"
 	"qrgen/ui"
 
 	"github.com/gen2brain/beeep"
@@ -8,7 +9,7 @@ import (
 )
 
 func main() {
-	ui.ImportConfig()
+	config.ImportConfig()
 	err := clipboard.Init()
 	if err != nil {
 		panic(err)

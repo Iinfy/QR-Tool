@@ -1,7 +1,9 @@
-package ui
+package config
 
 import (
 	"log"
+	"qrgen/app"
+	"qrgen/utils"
 
 	v "github.com/spf13/viper"
 )
@@ -14,6 +16,9 @@ func ImportConfig() {
 		log.Println(err)
 		setDefaultConfig()
 	}
+	app.SetGeneratorEnabled(v.GetBool("gen.enabled"))
+	app.SetScannerEnabled(v.GetBool("scanner.enabled"))
+	utils.SetActiveDisplay(v.GetInt("scanner.monitor"))
 }
 
 func setDefaultConfig() {
@@ -26,5 +31,9 @@ func setDefaultConfig() {
 	v.Set("scanner.hotkey", scanHotkey)
 	v.Set("scanner.monitor", 1)
 
+	v.WriteConfigAs("config.json")
+}
+
+func SaveConfig() {
 	v.WriteConfigAs("config.json")
 }
