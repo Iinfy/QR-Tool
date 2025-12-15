@@ -16,9 +16,10 @@ func ImportConfig() {
 		log.Println(err)
 		setDefaultConfig()
 	}
+	utils.SetActiveDisplay(v.GetInt("scanner.monitor"))
 	app.SetGeneratorEnabled(v.GetBool("gen.enabled"))
 	app.SetScannerEnabled(v.GetBool("scanner.enabled"))
-	utils.SetActiveDisplay(v.GetInt("scanner.monitor"))
+
 }
 
 func setDefaultConfig() {

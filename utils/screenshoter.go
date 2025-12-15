@@ -22,10 +22,11 @@ func CaptureScreenshot() (image.Image, error) {
 
 func SetActiveDisplay(newActiveDisplay int) error {
 	n := screenshot.NumActiveDisplays()
-	if n < newActiveDisplay {
+	if n < newActiveDisplay-1 {
 		return errors.New("incorrect display")
 	}
 	activeDisplay = newActiveDisplay - 1
+	log.Println("display set", activeDisplay+1)
 	return nil
 }
 
@@ -35,9 +36,9 @@ func GetActiveDisplays() int {
 }
 
 func IsMainDisplay(display int) bool {
-	if display-1 == activeDisplay {
-		return true
-	} else {
+	if display != activeDisplay+1 {
 		return false
+	} else {
+		return true
 	}
 }

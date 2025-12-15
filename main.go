@@ -3,6 +3,7 @@ package main
 import (
 	"qrgen/config"
 	"qrgen/ui"
+	"time"
 
 	"github.com/gen2brain/beeep"
 	"golang.design/x/clipboard"
@@ -17,6 +18,7 @@ func main() {
 	beeep.AppName = "QR Tool"
 	go ui.StartKeyboardHook()
 	defer ui.EndKeyboardHook()
+	time.Sleep(1 * time.Second)
 	ui.LaunchTrayMenu()
 
 }
