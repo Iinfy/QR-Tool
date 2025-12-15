@@ -1,3 +1,4 @@
 bin
 QRs
 *.exe
+config.json

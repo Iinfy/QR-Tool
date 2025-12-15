@@ -5,6 +5,7 @@ import (
 	"qrgen/app"
 
 	hook "github.com/robotn/gohook"
+	v "github.com/spf13/viper"
 )
 
 func StartKeyboardHook() {
@@ -19,13 +20,13 @@ func EndKeyboardHook() {
 
 func add() {
 	fmt.Println("--- Keyboard hook started ---")
-	hook.Register(hook.KeyDown, []string{"ctrl", "alt", "q"}, func(e hook.Event) {
-		fmt.Println("ctrl-alt-q", "qr generation")
+	hook.Register(hook.KeyDown, v.GetStringSlice("gen.hotkey"), func(e hook.Event) {
+		fmt.Println("qr generation")
 		app.UrlToQR()
 	})
 
-	hook.Register(hook.KeyDown, []string{"ctrl", "alt", "e"}, func(e hook.Event) {
-		fmt.Println("ctrl-alt-q", "qr scanning")
+	hook.Register(hook.KeyDown, v.GetStringSlice("scanner.hotkey"), func(e hook.Event) {
+		fmt.Println("qr scanning")
 		app.QRToUrl()
 	})
 

@@ -8,6 +8,7 @@ import (
 )
 
 func main() {
+	ui.ImportConfig()
 	err := clipboard.Init()
 	if err != nil {
 		panic(err)
